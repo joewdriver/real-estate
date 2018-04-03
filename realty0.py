@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from neupy import environment
 from neupy import algorithms, layers
 from neupy import plots
+from neupy.estimators import rmsle
 
 data = pd.read_csv('property-assessment-fy2015.csv')
 
@@ -44,25 +45,14 @@ lon = pd.Series(lon,name="longitude")
 
 data = pd.concat([lat,lon,bldg_price,land_price,total_price], axis = 1)
 
-# Test to look at data output. Need to remove
-# data.to_csv('test.csv')
-
-# Attempt at removing NaN
-# data = data[np.isfinite(data['latitude'])]
-# data = data[np.isfinite(data['longitude'])]
-# data = data[np.isfinite(data['AV_BLDG'])]
-# data = data[np.isfinite(data['AV_LAND'])]
-# data = data[np.isfinite(data['AV_TOTAL'])]
-
-
 
 data_scaler = preprocessing.MinMaxScaler()
-# # target_scaler = preprocessing.MinMaxScaler()
+target_scaler = preprocessing.MinMaxScaler()
 
 
 # TODO: Check after preprocessing data. Running into NaN or infinities here. Likely from missing values
 data = data_scaler.fit_transform(data.values)
-# target = target_scaler.fit_transform(target.reshape(-1, 1))
+target = target_scaler.fit_transform(data.reshape(-1, 1))
 
 environment.reproducible()
 
@@ -85,4 +75,10 @@ cgnet = algorithms.ConjugateGradient(
 
 cgnet.train(x_train, y_train, x_test, y_test, epochs=100)
 
-plots.error_plot(cgnet)
+# plots.error_plot(cgnet)
+print(x_test)
+print("Starting predictions")
+y_predict = cgnet.predict(x_test).round(1)
+error = rmsle(target_scaler.inverse_transform(y_test),
+              target_scaler.inverse_transform(y_predict))
+print(y_predict)
