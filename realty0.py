@@ -5,7 +5,10 @@ import numpy as np
 import sklearn.learning_curve as curves
 from sklearn import preprocessing
 from sklearn.tree import DecisionTreeRegressor
-# from neupy import environment
+from sklearn.model_selection import train_test_split
+from neupy import environment
+from neupy import algorithms, layers
+from neupy import plots
 
 data = pd.read_csv('property-assessment-fy2015.csv')
 
@@ -15,8 +18,10 @@ data = pd.read_csv('property-assessment-fy2015.csv')
 locations = data['Location']
 
 bldg_price = data[['AV_BLDG']].copy()
-land_price = data[['AV_LAND']].copy()
+land_price = data[['AV_LAND']].copy() # TODO REMOVE
 total_price = data[['AV_TOTAL']].copy()
+
+# TODO:Add LU
 
 lat = []
 lon = []
@@ -34,10 +39,20 @@ for i in range(len(locations)):
         lon.append(b[:-1])
         prev = i
 
-lat = pd.Series(lat,name="latitute")
+lat = pd.Series(lat,name="latitude")
 lon = pd.Series(lon,name="longitude")
 
-data = pd.concat([lat,lon,bldg_price,land_price,total_price])
+data = pd.concat([lat,lon,bldg_price,land_price,total_price], axis = 1)
+
+# Test to look at data output. Need to remove
+# data.to_csv('test.csv')
+
+# Attempt at removing NaN
+# data = data[np.isfinite(data['latitude'])]
+# data = data[np.isfinite(data['longitude'])]
+# data = data[np.isfinite(data['AV_BLDG'])]
+# data = data[np.isfinite(data['AV_LAND'])]
+# data = data[np.isfinite(data['AV_TOTAL'])]
 
 
 
@@ -49,10 +64,25 @@ data_scaler = preprocessing.MinMaxScaler()
 data = data_scaler.fit_transform(data.values)
 # target = target_scaler.fit_transform(target.reshape(-1, 1))
 
-# # environment.reproducible()
+environment.reproducible()
 
 # # split data into training and validation
 x_train, x_test, y_train, y_test = train_test_split(
     data, data, train_size=0.85
 )
 
+cgnet = algorithms.ConjugateGradient(
+    connection=[
+        layers.Input(5),
+        layers.Sigmoid(50),
+        layers.Sigmoid(5),
+    ],
+    search_method='golden',
+    show_epoch=25,
+    verbose=True,
+    addons=[algorithms.LinearSearch],
+)
+
+cgnet.train(x_train, y_train, x_test, y_test, epochs=100)
+
+plots.error_plot(cgnet)
