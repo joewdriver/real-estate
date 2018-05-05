@@ -11,21 +11,24 @@ from neupy import algorithms, layers
 from neupy import plots
 from neupy.estimators import rmsle
 
-data2015 = pd.read_csv('data2015.csv')
 
+# data2013 = pd.read_csv('data2013.csv')
+data = pd.read_csv('data2015.csv')
+data.append(pd.read_csv('data2013.csv'),ignore_index=True)
+data.append(pd.read_csv('data2011.csv'),ignore_index=True)
 
-lat = data2015["latitude"]
-lon = data2015["longitude"]
-year = data2015["year"]
-bdrms = data2015["bedrooms"]
-fbath = data2015["full_bth"]
-hbath = data2015["half_bth"]
-sf = data2015["square_foot"]
-res = data2015["res"]
-condo = data2015["condo"]
-built = data2015["yr_built"]
-bldg = data2015["bldg_price"]
-land = data2015["land_price"]
+lat = data["latitude"]
+lon = data["longitude"]
+year = data["year"]
+bdrms = data["bedrooms"]
+fbath = data["full_bth"]
+hbath = data["half_bth"]
+sf = data["square_foot"]
+res = data["res"]
+condo = data["condo"]
+built = data["yr_built"]
+bldg = data["bldg_price"]
+land = data["land_price"]
 
 lat.astype('float')
 lon.astype('float')
@@ -40,27 +43,11 @@ built.astype('float')
 bldg.astype('float')
 land.astype('float')
 
-for i in range(len(lat)):
-    if np.isnan(lat[i]) or np.isnan(lon[i]) or np.isnan(year[i]) or np.isnan(bdrms[i]) or np.isnan(fbath[i]) or np.isnan(hbath[i]) or np.isnan(sf[i]) or np.isnan(res[i]) or np.isnan(condo[i]) or np.isnan(built[i]) or np.isnan(bldg[i]) or np.isnan(land[i]):
-        print(i)
-        print(lat[i])
-        print(lon[i])
-        print(year[i])
-        print(bdrms[i])
-        print(fbath[i])
-        print(hbath[i])
-        print(sf[i])
-        print(res[i])
-        print(condo[i])
-        print(built[i])
-        print(bldg[i])
-        print(land[i])
 
-print("no None")
 
 
 # Only the terms used to predict value
-data2015 = pd.concat([lat,lon,year,bdrms,fbath,hbath,sf,res,condo,built], axis = 1)
+data = pd.concat([lat,lon,year,bdrms,fbath,hbath,sf,res,condo,built], axis = 1)
 
 
 
@@ -71,7 +58,7 @@ target = pd.concat([bldg,land],axis=1)
 data_scaler = preprocessing.MinMaxScaler()
 target_scaler = preprocessing.MinMaxScaler()
 
-data2015 = data_scaler.fit_transform(data2015.values)
+data = data_scaler.fit_transform(data.values)
 target = target_scaler.fit_transform(target.values)
 
 # Setting seed for reproducibility
@@ -79,7 +66,7 @@ environment.reproducible()
 
 # # split data into training and validation
 x_train, x_test, y_train, y_test = train_test_split(
-    data2015, target, train_size=0.85
+    data, target, train_size=0.85
 )
 
 # Creating the neural network
@@ -116,9 +103,13 @@ print(error)
 #   Row 2: Predicted values (prices)
 #   Row 3: Test values (prices)
 #   Row 4: Error
-with open('predict.csv','w') as myfile:
-    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-    wr.writerow(data_scaler.inverse_transform(x_test))
-    wr.writerow(target_scaler.inverse_transform(y_predict))
-    wr.writerow(target_scaler.inverse_transform(y_test))
-    wr.writerow([error])
+with open('test.csv','w') as myfile:
+    wr = csv.writer(myfile,quoting=csv.QUOTE_ALL)
+    for i in range(len(y_predict)):
+        wr.writerow(data_scaler.inverse_transform(x_test)[i].tolist() + target_scaler.inverse_transform(y_predict)[i].tolist())
+# with open('predict_180501.csv','w') as myfile:
+#     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+#     wr.writerow(data_scaler.inverse_transform(x_test))
+#     wr.writerow(target_scaler.inverse_transform(y_predict))
+#     wr.writerow(target_scaler.inverse_transform(y_test))
+#     wr.writerow([error])
