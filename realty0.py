@@ -1,23 +1,30 @@
 import csv
-import pandas as pd
-import matplotlib.pyplot as pl
 import numpy as np
-import sklearn.learning_curve as curves
+import pandas as pd
+from neupy import plots
+from neupy import environment
+import matplotlib.pyplot as pl
 from sklearn import preprocessing
+from neupy.estimators import rmsle
+from neupy import algorithms, layers
+import sklearn.learning_curve as curves
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split
-from neupy import environment
-from neupy import algorithms, layers
-from neupy import plots
-from neupy.estimators import rmsle
 
 
-# data2013 = pd.read_csv('data2013.csv')
-data = pd.read_csv('data2015.csv')
-data.append(pd.read_csv('data2013.csv'),ignore_index=True)
-data.append(pd.read_csv('data2011.csv'),ignore_index=True)
-test = pd.read_csv('data2018.csv')
+# Read training data files and testing data files
+data = pd.read_csv('./new_data/data2015.csv')
+data.append(pd.read_csv('./new_data/data2013.csv'),ignore_index=True)
+data.append(pd.read_csv('./new_data/data2011.csv'),ignore_index=True)
+# The try of adding the year 2016 fails because the dataset data2016.csv was empty
+#data.append(pd.read_csv('./new_data/data2016.csv'),ignore_index=True)
+# Shuffle data
+data = data.iloc[np.random.permutation(len(data))]
 
+test = pd.read_csv('./new_data/data2018.csv')
+
+# Get specific columns that we will be using and transfer them into the appropriate type
+# For training data
 lat = data["latitude"]
 lon = data["longitude"]
 year = data["year"]
@@ -44,6 +51,8 @@ built.astype('float')
 bldg.astype('float')
 land.astype('float')
 
+# Get specific columns that we will be using and transfer them into the appropriate type
+# For testing data
 lat_test = test["latitude"]
 lon_test = test["longitude"]
 year_test = test["year"]
@@ -71,8 +80,7 @@ bldg_test.astype('float')
 land_test.astype('float')
 
 
-
-# Only the terms used to predict value
+# Concatenate all values above
 data = pd.concat([lat,lon,year,bdrms,fbath,hbath,sf,res,condo,built], axis = 1)
 test = pd.concat([lat_test,lon_test,year_test,bdrms_test,fbath_test,hbath_test,sf_test,res_test,condo_test,built_test], axis = 1)
 
