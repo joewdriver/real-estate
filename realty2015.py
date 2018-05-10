@@ -1,10 +1,11 @@
 import csv
-import pandas as pd
 import numpy as np
+import pandas as pd
+from tqdm import tqdm
 
 
 # Import data from file by year
-data = pd.read_csv('property-assessment-fy2015.csv')
+data = pd.read_csv('./old_data/property-assessment-fy2015.csv')
 
 # TODO: Need to filter all data
 
@@ -154,4 +155,4 @@ land = pd.Series(land,name="land_price")
 
 
 data = pd.concat([lat,lon,add,year,bdrms,fbath,hbath,sf,res,condo,built,bldg,land], axis = 1)
-data.to_csv('data2015.csv', index=False)
+data.to_csv('./new_data/data2015.csv', index=False)
