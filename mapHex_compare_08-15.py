@@ -300,7 +300,7 @@ cbar.set_label('quartiles', rotation=270)
 ##fig.suptitle("My location density in Seattle", fontdict={'size':24, 'fontweight':'bold'}, y=0.92)
 ax.set_title("Boston Housing Change in Square Ft. Value Between 2008 and 2015", fontsize=14, y=0.98)
 
-plt.savefig('data\PerSq_norm_08-15.png', dpi=300, frameon=False, bbox_inches='tight', pad_inches=0.5, facecolor='#DEDEDE')
+plt.savefig('./images/PerSq_norm_08-15.png', dpi=300, frameon=False, bbox_inches='tight', pad_inches=0.5, facecolor='#DEDEDE')
 plt.show()
 
 
