@@ -27,7 +27,7 @@ data = pd.read_csv('./new_data/data13-18.csv')
 # Shuffle data
 data = data.iloc[np.random.permutation(len(data))]
 
-test = pd.read_csv('./new_data/values2021.csv')
+test = pd.read_csv('./new_data/future_values.csv')
 
 # Get specific columns that we will be using and transfer them into the appropriate type
 # For training data
