@@ -93,7 +93,7 @@ test = pd.concat([lat_test,lon_test,year_test,bdrms_test,fbath_test,hbath_test,s
 
 # Target values. Currently bldg_price, land_price
 target = pd.concat([bldg,land],axis=1)
-# target_test = pd.concat([bldg_test,land_test],axis=1)
+target_test = pd.concat([bldg_test,land_test],axis=1)
 
 # Normalize data
 data_scaler = preprocessing.MinMaxScaler()
@@ -103,7 +103,6 @@ data = data_scaler.fit_transform(data.values)
 target = target_scaler.fit_transform(target.values)
 
 test = data_scaler.fit_transform(test.values)
-# target_test = target_scaler.fit_transform(target_test.values)
 
 # Setting seed for reproducibility
 environment.reproducible()

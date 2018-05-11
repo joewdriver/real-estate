@@ -51,7 +51,7 @@ Since `realty0.py` predicts known values in `data2018.csv`, errors can be calcul
 
 ### Maps
 
-Since this project deals with realty data, creating a map to visualize data makes sense. This project has 3 scripts that generate map visualizations. All map images can be found in [`images`](https://github.com/joewdriver/real-estate/tree/master/images). `mapHex_compare_15_Sqftvalue.py` maps the price per square foot of properties in 2015. It creates the following map `PerSq_norm_sqftvalue15.jpg`.
+Since this project deals with realty data, creating a map to visualize data makes sense. This project has 3 scripts that generate map visualizations. All map images can be found in [`images`](https://github.com/joewdriver/real-estate/tree/master/images). All of the map scripts pull from files in [`WGS84`](https://github.com/joewdriver/real-estate/tree/master/WGS84) to create the maps of Boston. `mapHex_compare_15_Sqftvalue.py` maps the price per square foot of properties in 2015. It creates the following map `PerSq_norm_sqftvalue15.jpg`.
 
 ![alt text](https://github.com/joewdriver/real-estate/blob/master/images/PerSq_norm_sqftvalue15.jpg "2015 price per square foot")
 
