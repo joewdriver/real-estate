@@ -20,7 +20,7 @@ def write_property(address,wr,data = data2018):
     out[3]=2021
     wr.writerow(out)
 
-with open('future_values_test.csv','w') as myfile:
+with open('future_values.csv','w') as myfile:
     wr = csv.writer(myfile,quoting=csv.QUOTE_ALL)
     wr.writerow(["latitude", "longitude","address", "year", "bedrooms", "full_bth", "half_bth", "square_foot", "res", "condo", "yr_built"])
     
