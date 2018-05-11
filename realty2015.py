@@ -1,3 +1,11 @@
+###
+# realty2015.py
+# 
+# Cleans the dataset for 2015
+# 
+# Outputs data2015.csv
+###
+
 import csv
 import numpy as np
 import pandas as pd
@@ -35,7 +43,6 @@ LU = data['LU']
 LU_keys = ['R1', 'R2', 'R3', 'R4', 'CD']
 
 add = []
-# zc = []
 lat = []
 lon = []
 bldg = []
@@ -129,7 +136,6 @@ for i in range(len(LU)):
             add.append((str(st_num[i]) + ' ' + st_name[i] + ' ' + st_name_suf[i] + ' ' + str(zip_code[i][:-1])).upper())
         else:
             add.append((str(st_num[i]) + ' ' + st_name[i] + str(zip_code[i][:-1])).upper())    
-        # zc.append(zip_code[i][:-1])
         bldg.append(float(bldg_price[i]))
         land.append(float(land_price[i]))
         sf.append(float(land_sf[i]))
@@ -141,7 +147,6 @@ year = [2015]*len(lat)
 lat = pd.Series(lat,name="latitude")
 lon = pd.Series(lon,name="longitude")
 add = pd.Series(add,name="address")
-# zc = pd.Series(zc,name="zipcode")
 year = pd.Series(year,name="year")
 bdrms = pd.Series(bdrms,name="bedrooms")
 fbath = pd.Series(fbath,name="full_bth")

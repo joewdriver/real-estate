@@ -1,3 +1,11 @@
+###
+# realty2018.py
+# 
+# Cleans the dataset for 2018
+# 
+# Outputs data2018.csv
+###
+
 import csv
 import numpy as np
 import pandas as pd
@@ -155,7 +163,6 @@ year = [2018]*len(lat)
 lat = pd.Series(lat,name="latitude")
 lon = pd.Series(lon,name="longitude")
 add = pd.Series(add,name="address")
-# zc = pd.Series(zc,name="zipcode")
 year = pd.Series(year,name="year")
 bdrms = pd.Series(bdrms,name="bedrooms")
 fbath = pd.Series(fbath,name="full_bth")
@@ -169,4 +176,4 @@ land = pd.Series(land,name="land_price")
 
 
 data = pd.concat([lat,lon,add,year,bdrms,fbath,hbath,sf,res,condo,built,bldg,land], axis = 1)
-data.to_csv('data2018.csv', index=False)
+data.to_csv('./new_data/data2018.csv', index=False)

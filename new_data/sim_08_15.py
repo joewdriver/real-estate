@@ -1,3 +1,11 @@
+###
+# sim_08_15.py
+# 
+# Finds the properties in data2015 that are also in data2008
+# 
+# Outputs sim_08_15.csv
+###
+
 import csv
 import numpy as np
 import pandas as pd

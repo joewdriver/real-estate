@@ -1,3 +1,11 @@
+###
+# realty0.py
+# 
+# Predicts housing prices for the year 2018.
+# 
+# Outputs predict2018.csv
+###
+
 import csv
 import numpy as np
 import pandas as pd
@@ -13,11 +21,8 @@ from sklearn.model_selection import train_test_split
 
 
 # Read training data files and testing data files
-data = pd.read_csv('./new_data/data2015.csv')
-data.append(pd.read_csv('./new_data/data2013.csv'),ignore_index=True)
-data.append(pd.read_csv('./new_data/data2011.csv'),ignore_index=True)
-# The try of adding the year 2016 fails because the dataset data2016.csv was empty
-#data.append(pd.read_csv('./new_data/data2016.csv'),ignore_index=True)
+data = pd.read_csv('./new_data/data08-15.csv')
+
 # Shuffle data
 data = data.iloc[np.random.permutation(len(data))]
 
@@ -88,7 +93,7 @@ test = pd.concat([lat_test,lon_test,year_test,bdrms_test,fbath_test,hbath_test,s
 
 # Target values. Currently bldg_price, land_price
 target = pd.concat([bldg,land],axis=1)
-target_test = pd.concat([bldg_test,land_test],axis=1)
+# target_test = pd.concat([bldg_test,land_test],axis=1)
 
 # Normalize data
 data_scaler = preprocessing.MinMaxScaler()
@@ -103,7 +108,7 @@ test = data_scaler.fit_transform(test.values)
 # Setting seed for reproducibility
 environment.reproducible()
 
-# # split data into training and validation
+# split data into training and validation
 x_train, x_test, y_train, y_test = train_test_split(
     data, target, train_size=0.85
 )
@@ -140,20 +145,8 @@ print(error)
 
 # write values to csv
 #   lat,lon,year,bdrms,fbath,hbath,sf,res,condo,built
-with open('test.csv','w') as myfile:
+with open('predict2018.csv','w') as myfile:
     wr = csv.writer(myfile,quoting=csv.QUOTE_ALL)
     wr.writerow(["latitude", "longitude", "year", "bedrooms", "full_bth", "half_bth", "square_foot", "res", "condo", "yr_built", "bldg_price", "land_price"])
     for i in range(len(y_predict)):
         wr.writerow(data_scaler.inverse_transform(test)[i].tolist() + target_scaler.inverse_transform(y_predict)[i].tolist())
-
-# write values to csv
-#   Row 1: Test cases (lat and lon)
-#   Row 2: Predicted values (prices)
-#   Row 3: Test values (prices)
-#   Row 4: Error
-# with open('predict_180501.csv','w') as myfile:
-#     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-#     wr.writerow(data_scaler.inverse_transform(x_test))
-#     wr.writerow(target_scaler.inverse_transform(y_predict))
-#     wr.writerow(target_scaler.inverse_transform(y_test))
-#     wr.writerow([error])

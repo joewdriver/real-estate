@@ -17,23 +17,22 @@ data2018 = pd.read_csv('data2018.csv')
 
 with open('common.csv','w') as myfile:
     wr = csv.writer(myfile,quoting=csv.QUOTE_ALL)
+
+    # Header row
     wr.writerow(["2008","2009","2010","2011","2013","2015","2018"])
+
+    # Use 2009 because it is smallest
     for i in range(len(data2009["latitude"])):
         print(i)
+
+        # Finding indices that the address occurs
         ind08 = np.where(data2008["address"] == data2009["address"][i])
         ind10 = np.where(data2010["address"] == data2009["address"][i])
         ind11 = np.where(data2011["address"] == data2009["address"][i])
         ind13 = np.where(data2013["address"] == data2009["address"][i])
         ind15 = np.where(data2015["address"] == data2009["address"][i])
-        # ind09 = data2015[data2015["address"] == data2015["address"][i]]
         ind18 = np.where(data2018["address"] == data2009["address"][i])
-        # print("i= ",i)
-        # print(ind08[0].size)
-        # print(ind10[0].size)
-        # print(ind11[0].size)
-        # print(ind13[0].size)
-        # print(ind15[0].size)
-        # print(ind18)
 
+        # Filter out when any dataset does not have the current property
         if ind08[0].size != 0 and ind10[0].size != 0 and ind11[0].size != 0 and ind13[0].size != 0 and ind15[0].size != 0 and ind18[0].size != 0:
             wr.writerow([ind08[0][0],i,ind10[0][0],ind11[0][0],ind13[0][0],ind15[0][0],ind18[0][0]])

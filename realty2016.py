@@ -1,3 +1,11 @@
+###
+# realty2016.py
+# 
+# Cleans the dataset for 2016
+# 
+# Outputs data2016.csv
+###
+
 import csv
 import numpy as np
 import pandas as pd
