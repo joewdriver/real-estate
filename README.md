@@ -1,11 +1,17 @@
 # real-estate
-Machine Learning project for CS542 Spring 2018.
+Boston Real-Estate project for the Machine Learning class CS542 for the Spring 2018 semester.
+
+Over the last twenty years the the cost of living in the city of Boston has changed dramatically. Areas such as South Boston and the Seaport have gone from dangerous no-go zones to some of the most sought after properties in the area.
+
+Although incomplete in many years, the city and other groups have done an admiral job of recording these changes in a semi-consistent group of datasets, found at [Analyze Boston](https://data.boston.gov/dataset/property-assessment).  For data provided over 14 years (2004 - 2017) our goal is to gather property information regarding condition, size, type, and value; and use machine learning techniques to project the change in that value of over time.  With this information we can identify “hot-spots” of growing value, areas of rapid value increase that may push lower income residents out of the city, and possibly where the next best place to buy will be.
 
 ## Data sets
 
+All data sets are stored as csv files where each row is a property and each column is a different value of that property. The columns are latitude, longitude, address, year of appraisal, bedrooms, full baths, half baths, square foot, residential, condo, year built, building price, and land price. Most of these are straight forward. The residential and condo columns denote what type of property it is. If it is a residential property, the residential column will be 1 and condo will be 0. For a condo, these values will be flipped.
+
 ### [Old data](https://github.com/joewdriver/real-estate/tree/master/old_data)
 
-Data sets pulled directly from [Analyze Boston](https://data.boston.gov/) can be found in the [`old_data`](https://github.com/joewdriver/real-estate/tree/master/old_data) directory. These contain a lot more information than the model uses.
+Data sets pulled directly from [Analyze Boston](https://data.boston.gov/dataset/property-assessment) can be found in the [`old_data`](https://github.com/joewdriver/real-estate/tree/master/old_data) directory. These contain a lot more information than the model uses.
 
 ### [New data](https://github.com/joewdriver/real-estate/tree/master/new_data)
 
