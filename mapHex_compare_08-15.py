@@ -23,8 +23,8 @@ from sklearn import preprocessing
 
 tic = time.clock()
 
-data2008 = pd.read_csv ('cleaned\data2008.csv')
-data = pd.read_csv('cleaned\sim_08_15.csv')
+data2008 = pd.read_csv ('./new_data/data2008.csv')
+data = pd.read_csv('./new_data/sim_08_15.csv')
 #print data2008
 #print data
 
